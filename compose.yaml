@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  app:
+    image: myjackbuild
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://my-mysql:3306/kea
+      - SPRING_DATASOURCE_USERNAME=kea
+      - SPRING_DATASOURCE_PASSWORD=kea
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    container_name: my-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: kea
+      MYSQL_DATABASE: kea
+      MYSQL_USER: kea
+      MYSQL_PASSWORD: kea
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
